@@ -1,6 +1,6 @@
 {-# LANGUAGE CPP, ForeignFunctionInterface, BangPatterns #-}
 {-# LANGUAGE UnliftedFFITypes, MagicHash,
-            UnboxedTuples, DeriveDataTypeable #-}
+            UnboxedTuples, DeriveDataTypeable, CApiFFI #-}
 #if __GLASGOW_HASKELL__ >= 703
 {-# LANGUAGE Unsafe #-}
 #endif
@@ -604,7 +604,7 @@ inlinePerformIO = accursedUnutterablePerformIO
 foreign import ccall unsafe "string.h strlen" c_strlen
     :: CString -> IO CSize
 
-foreign import ccall unsafe "static stdlib.h &free" c_free_finalizer
+foreign import capi unsafe "static stdlib.h value free" c_free_finalizer
     :: FunPtr (Ptr Word8 -> IO ())
 
 foreign import ccall unsafe "string.h memchr" c_memchr
